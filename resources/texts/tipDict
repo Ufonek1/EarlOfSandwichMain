@@ -1,0 +1,11 @@
+PLAY;Start a new game or load an existing one
+OPTIONS;Set game options, including key bindings
+EXTRAS;If you just don't have enough
+QUIT;Exit the game
+NEW;Start a new campaign
+LOAD;Continue an existing save
+COLOUR;Save the current ship colour for your campaign
+MAIN;Return to main menu
+GAME;Play
+SAVED;Current ship colour saved
+WHEEL;Use the mouse wheel to change
