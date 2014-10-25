@@ -17,7 +17,7 @@ class settingsHandler(object):
     
     settingsFont = pygame.font.Font(MAIN_MENU_FONT_PATH, 25)
     settingDict = collections.OrderedDict()
-    _Number2Name = ['MOVE_UP', 'MOVE_DOWN', 'MOVE_LEFT', 'MOVE_RIGHT', 'PAUSE', 'ATTACK', 'MUSIC_VOLUME', 'SOUND_VOLUME']
+    _Number2Name = ['MOVE_UP', 'MOVE_DOWN', 'MOVE_LEFT', 'MOVE_RIGHT', 'PAUSE', 'ATTACK', 'MUSIC_VOLUME', 'SOUND_VOLUME', 'RESOLUTION']
     _Name2Text = {'MOVE_UP':'Up', 'MOVE_DOWN':'Down', 'MOVE_LEFT':'Left', 'MOVE_RIGHT':'Right', 'PAUSE':'Pause', 'ATTACK':'Attack', 'MUSIC_VOLUME':'Music Volume', 'SOUND_VOLUME':'Sound Volume'}
     
     def loadSettings(self):
@@ -29,8 +29,12 @@ class settingsHandler(object):
             
             for line in source:
                 #load the key and value from each line (strip is there to remove \n)
-                (key, val) = line.strip().split(";")
-                self.settingDict[key] = val
+                if line.startswith('#'):
+                    #this will allow comment lines
+                    pass
+                else:
+                    (key, val) = line.strip().split(";")
+                    self.settingDict[key] = val
                 
             #self.settingDict = collections.OrderedDict(readdict)
         
@@ -40,6 +44,7 @@ class settingsHandler(object):
         for setting in self.settingDict:
             if self.settingDict[setting].startswith('K_'):
                 #assign value from dictionary to constants
+                # - translate key name to pygame key number
                 x = pl.__dict__[self.settingDict[setting]]
                 core.constants._ALLOWED_KEYS.append(x)
             else:
@@ -100,7 +105,7 @@ class settingsHandler(object):
     def drawSetting(self, settingNumber = "EMPTY", colour = FULL_RED):
         '''
         draw an existing setting into a surface
-        drawSetting(setting) --> Surface
+        drawSetting(setting) --> pygame.Surface
         '''
         if settingNumber == "EMPTY":
             print("drawing _")
